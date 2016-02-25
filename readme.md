@@ -2,13 +2,11 @@
 
 ## Introduction
 
-(DRAFT)
-The ClimbingGrade widget is based on [https://github.com/lepoetemaudit/percentageloader] and  [https://github.com/Grantismo/climbing-grade.js]
+The ClimbingGrade widget is based on [lepoetemaudit/percentageloader](https://github.com/lepoetemaudit/percentageloader) and  [Grantismo/climbing-grade.js](https://github.com/Grantismo/climbing-grade.js)
 
-PercentageLoader is a plugin with optional jQuery support for displaying a progress widget in more visually striking way than
-the ubiquitous horizontal progress bar / textual counter. The plugin takes miniminal installation and is simple
-and flexibile to use. It makes use of HTML 5 canvas for a rich graphical appearance with only a 10kb (minified)
-javascript file necessary (suggested web font optional). It uses vectors rather than images so can be easily
+![Widget](http://troulite.fr/~lolo/widget.png)
+
+The plugin takes miniminal installation and is simple and flexibile to use. It makes use of HTML 5 canvas for a rich graphical appearance with only a 10kb (minified) javascript file necessary (suggested web font optional). It uses vectors rather than images so can be easily
 deployed at various sizes by simply adjusting the initial parameters. For a live demo please see
 [http://widgets.better2web.com/loader](http://widgets.better2web.com/loader)
 
