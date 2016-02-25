@@ -1,6 +1,9 @@
-# PercentageLoader
+# ClimbingGradeWidget
 
 ## Introduction
+
+(DRAFT)
+The ClimbingGrade widget is based on [https://github.com/lepoetemaudit/percentageloader] and  [https://github.com/Grantismo/climbing-grade.js]
 
 PercentageLoader is a plugin with optional jQuery support for displaying a progress widget in more visually striking way than
 the ubiquitous horizontal progress bar / textual counter. The plugin takes miniminal installation and is simple
