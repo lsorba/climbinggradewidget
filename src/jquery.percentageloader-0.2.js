@@ -26,18 +26,19 @@ see the file license.txt that was included with the plugin bundle.
 
     window.PercentageLoader = function(el, params) {
       var settings, canvas, percentageText, valueText, items, i, item, selectors, s, ctx, progress,
-            value, cX, cY, lingrad, innerGrad, tubeGrad, innerRadius, innerBarRadius, outerBarRadius,
-            radius, startAngle, endAngle, counterClockwise, completeAngle, setProgress, setValue,
+            secondarygradevalue, maingradevalue, cX, cY, lingrad, innerGrad, tubeGrad, innerRadius, innerBarRadius, outerBarRadius,
+            radius, startAngle, endAngle, counterClockwise, completeAngle, setProgress, setSecondaryGradeValue, setMainGradeValue,
             applyAngle, drawLoader, clipValue, outerDiv, ready, plugin;
 
         plugin = this;
 
         /* Specify default settings */
         settings = {
-            width: 256,
-            height: 256,
+            width: 128,
+            height: 128,
             progress: 0,
-            value: '0kb',
+            maingradevalue: '1',
+            secondarygradevalue: 'III',
             controllable: false
         };
 
@@ -267,20 +268,22 @@ see the file license.txt that was included with the plugin bundle.
             (function () {
                 var fontSize, string, smallSize, heightRemaining;
                 /* Calculate the size of the font based on the canvas size */
-                fontSize = cX / 2;
+                //fontSize = cX / 2;
+                fontSize = cX / 1.6;
 
-                percentageText.style.top = ((settings.height / 2) - (fontSize / 2)).toString() + 'px';
+                //percentageText.style.top = ((settings.height / 2) - (fontSize / 2)).toString() + 'px';
+                percentageText.style.top = ((settings.height / 2) - (fontSize / 1.6)).toString() + 'px';
                 percentageText.style.color = '#80a9c8';
                 percentageText.style.font = fontSize.toString() + 'px BebasNeueRegular';
                 percentageText.style.textShadow = '0 1px 1px #FFFFFF';
 
                 /* Calculate the text for the given percentage */
-                string = (progress * 100.0).toFixed(0) + '%';
-
-                percentageText.innerHTML = string;
+                //string = (progress * 100.0).toFixed(0) + '%';
+                percentageText.innerHTML = maingradevalue;
 
                 /* Calculate font and placement of small 'value' text */
-                smallSize = cX / 5.5;
+                //smallSize = cX / 5.5;
+                smallSize = cX / 4;
                 valueText.style.color = '#80a9c8';
                 valueText.style.font = smallSize.toString() + 'px BebasNeueRegular';
                 valueText.style.height = smallSize.toString() + 'px';
@@ -288,8 +291,8 @@ see the file license.txt that was included with the plugin bundle.
 
                 /* Ugly vertical align calculations - fit into bottom ring.
                  * The bottom ring occupes 1/6 of the diameter of the circle */
-                heightRemaining = (settings.height * 0.16666666) - smallSize;
-                valueText.style.top = ((settings.height * 0.8333333) + (heightRemaining / 4)).toString() + 'px';
+                heightRemaining = (settings.height * 0.19) - smallSize;
+                valueText.style.top = ((settings.height * 0.81) + (heightRemaining / 4)).toString() + 'px';
             }());
         };
 
@@ -320,9 +323,13 @@ see the file license.txt that was included with the plugin bundle.
 
         this.setProgress = setProgress;
 
-        setValue = function (val) {
-            value = val;
-            valueText.innerHTML = value;
+        setSecondaryGradeValue = function (val) {
+            secondarygradevalue = val;
+            valueText.innerHTML = secondarygradevalue;
+        };
+        setMainGradeValue = function (val) {
+            maingradevalue = val;
+            percentageText.innerHTML = maingradevalue;
         };
 
         ready = function(fn) {
@@ -333,8 +340,10 @@ see the file license.txt that was included with the plugin bundle.
             }
         };
 
-        this.setValue = setValue;
-        this.setValue(settings.value);
+        this.setSecondaryGradeValue = setSecondaryGradeValue;
+        this.setSecondaryGradeValue(settings.secondarygradevalue);
+        this.setMainGradeValue = setMainGradeValue;
+        this.setMainGradeValue(settings.maingradevalue);
 
         this.loaded = ready;
 
@@ -430,7 +439,8 @@ if (typeof jQuery !== 'undefined') {
                 width : 256,  // width in pixels
                 height : 256, // height in pixels
                 progress: 0,  // initialise progress bar position, within the range [0..1]
-                value: '0kb'  // initialise text label to this value
+                maingradevalue: '0kb'  // initialise text label to this value
+                secondarygradevalue: '0kb'  // initialise text label to this value
             });
          */
         $.fn.percentageLoader = function (params) {
@@ -439,8 +449,11 @@ if (typeof jQuery !== 'undefined') {
                     $.data(this, 'dj_percentageloader', new PercentageLoader(this, params));
                 } else {
                     var plugin = $.data(this, 'dj_percentageloader');
-                    if (params['value'] !== undefined) {
-                        plugin.setValue(params['value']);
+                    if (params['secondarygradevalue'] !== undefined) {
+                        plugin.setSecondaryGradeValue(params['secondarygradevalue']);
+                    }
+                    if (params['maingradevalue'] !== undefined) {
+                        plugin.setMainGradeValue(params['maingradevalue']);
                     }
 
                     if (params['progress'] !== undefined) {

@@ -5,6 +5,9 @@ var ClimbingGrade = (function() {
     this._rangeDelimeter = options && options.rangeDelimeter ? options.rangeDelimeter : " to ";
     this._pairDelimeter = options && options.pairDelimeter ? options.pairDelimeter : "/";
     this._systems = {
+      internal: {
+        grades: ["27", "30", "33", "37", "40", "45", "50", "53", "57", "60", "65", "70", "73", "75", "77", "80", "82", "83", "87", "89", "90", "93", "97", "98", "100", "103", "107", "110", "113", "115", "118", "120", "123"],
+      },
       yds: {
         grades: ["5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7", "5.8", "5.9", "5.10a", "5.10b", "5.10c", "5.10d", "5.11a", "5.11b", "5.11c", "5.11d", "5.12a", "5.12b", "5.12c", "5.12d", "5.13a", "5.13b", "5.13c", "5.13d", "5.14a", "5.14b", "5.14c", "5.14d", "5.15a", "5.15b", "5.15c", "5.15d"],
       },
@@ -107,7 +110,8 @@ var ClimbingGrade = (function() {
     }
 
     if (universalGrades.length === 0) {
-      throw new Error("Climbing Grade Not Recognized");
+    //  throw new Error("Climbing Grade Not Recognized");
+	return;
     }
 
     return universalGrades;
