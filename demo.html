@@ -3,6 +3,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="src/jquery.percentageloader-0.2.js"></script>
+    <script src="src/climbing-grade.js"></script>
     <link rel="stylesheet" href="src/jquery.percentageloader-0.2.css">
 
     <style>
@@ -12,8 +13,8 @@
       }
       
       #topLoader {
-        width: 256px;
-        height: 256px;
+        width: 128px;
+        height: 128px;
         margin-bottom: 32px;
       }
       
@@ -25,7 +26,7 @@
       }
       
       #animateButton {
-        width: 256px;
+        width: 128px;
       }
     </style>
   
@@ -40,8 +41,10 @@
        <script>
         $(function() {
           var $topLoader = $("#topLoader").percentageLoader({
-            width: 256, height: 256, controllable: true, progress: 0.5, onProgressUpdate: function (val) {
-              this.setValue(Math.round(val * 100.0) + 'kj');
+            width: 128, height: 128, controllable: true, progress: 0.5, onProgressUpdate: function (val) {
+	      var grade = new ClimbingGrade( (Math.round(30+(val*(120-30)))).toString() , "internal");
+              this.setSecondaryGradeValue(grade.format("uiaa"));
+              this.setMainGradeValue(grade.format("french"));
             }
           });
 
@@ -58,22 +61,27 @@
               }
               topLoaderRunning = true;
 
-              var kb = 0;
-              var totalKb = 999;
+              var mingrade = 30;
+              var maxgrade = 120;
+	      var curgrade = 30;
+	      var grade = new ClimbingGrade(curgrade.toString() , "internal");
+
 
               var animateFunc = function () {
-                kb += 17;
-                $topLoader.percentageLoader({progress: kb / totalKb});
-                $topLoader.percentageLoader({value: (kb.toString() + 'kb')});
+                curgrade += 10;
+	        grade = new ClimbingGrade(curgrade.toString() , "internal");
+                $topLoader.percentageLoader({progress: (curgrade - mingrade) / (maxgrade-mingrade)});
+                $topLoader.percentageLoader({secondarygradevalue: grade.format("uiaa")});
+                $topLoader.percentageLoader({maingradevalue: grade.format("french")});
 
-                if (kb < totalKb) {
-                  setTimeout(animateFunc, 25);
+                if (curgrade < maxgrade) {
+                  setTimeout(animateFunc, 200);
                 } else {
                   topLoaderRunning = false;
                 }
               };
 
-              setTimeout(animateFunc, 25);
+              setTimeout(animateFunc, 200);
             });
 
           }});
