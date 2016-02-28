@@ -37,8 +37,8 @@ see the file license.txt that was included with the plugin bundle.
             width: 128,
             height: 128,
             progress: 0,
-            maingradevalue: '1',
-            secondarygradevalue: 'III',
+            maingradevalue: '2',
+            secondarygradevalue: 'III-',
             controllable: false
         };
 
