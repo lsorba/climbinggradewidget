@@ -58,10 +58,10 @@ Supported grade formats are:
 
 ## Examples:
 
-    var mingrade = 30;
-    var maxgrade = 120;
-	 var curgrade = 30;
-	 var grade = new ClimbingGrade(curgrade.toString() , "internal");
+    var mingrade = 0;
+    var maxgrade = 96 ;
+    var curgrade = 0;
+    var grade = new ClimbingGrade(curgrade.toString() , "internal");
     
     // jQuery
     $("#myDiv").percentageLoader({

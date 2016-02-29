@@ -1,7 +1,9 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="src/jquery.percentageloader-0.2.js"></script>
+    <script src="src/climbing-grade.js"></script>
     <link rel="stylesheet" href="src/jquery.percentageloader-0.2.css">
 
     <style>
@@ -11,8 +13,8 @@
       }
       
       #topLoader {
-        width: 256px;
-        height: 256px;
+        width: 128px;
+        height: 128px;
         margin-bottom: 32px;
       }
       
@@ -24,7 +26,7 @@
       }
       
       #animateButton {
-        width: 256px;
+        width: 128px;
       }
     </style>
   
@@ -37,47 +39,56 @@
       <button id="animateButton">Animate Loader</button>
       
        <script>
-          window.addEventListener('load', function() {
-            var topLoader = new PercentageLoader(document.getElementById('topLoader'), {
-              width: 256, height: 256, controllable: true, progress: 0.5, onProgressUpdate: function (val) {
-                this.setValue(Math.round(val * 100.0) + 'kj');
-              }
-            });
-
-            var topLoaderRunning = false;
-
-            /* Some browsers may load in assets asynchronously. If you are using the percentage
-             * loader as soon as you create it (i.e. within the same execution block) you may want to
-             * wrap it in the below `ready` function to ensure its correct operation
-             */
-            topLoader.loaded(function () {
-              document.getElementById('animateButton').addEventListener('click', function () {
-                if (topLoaderRunning) {
-                  return;
-                }
-
-                topLoaderRunning = true;
-
-                var kb = 0;
-                var totalKb = 999;
-
-                var animateFunc = function () {
-                  kb += 17;
-                  topLoader.setProgress(kb / totalKb);
-                  topLoader.setValue(kb.toString() + 'kb');
-
-                  if (kb < totalKb) {
-                    setTimeout(animateFunc, 25);
-                  } else {
-                    topLoaderRunning = false;
-                  }
-                };
-
-                setTimeout(animateFunc, 25);
-              });
-            });
+	function progressToInternalGrade(val){
+		return Math.round(100*val/3)*3; 
+	}
+        $(function() {
+          var $topLoader = $("#topLoader").percentageLoader({
+            width: 128, height: 128, controllable: true, progress: 0.5, onProgressUpdate: function (val) {
+	      var grade = new ClimbingGrade( progressToInternalGrade(val).toString() , "internal");
+              this.setMainGradeValue(grade.format("french"));
+              this.setSecondaryGradeValue(grade.format("uiaa"));
+            }
           });
 
+          var topLoaderRunning = false;
+
+          /* Some browsers may load in assets asynchronously. If you are using the percentage
+           * loader as soon as you create it (i.e. within the same execution block) you may want to
+           * wrap it in the below `ready` function to ensure its correct operation
+           */
+          $topLoader.percentageLoader({onready: function () {
+            $("#animateButton").click(function () {
+              if (topLoaderRunning) {
+                return;
+              }
+              topLoaderRunning = true;
+
+              var mingrade = 0;
+              var maxgrade = 96;
+	      var curgrade = 0;
+	      var grade = new ClimbingGrade(curgrade.toString() , "internal");
+
+
+              var animateFunc = function () {
+                curgrade += 3;
+	        grade = new ClimbingGrade(curgrade.toString() , "internal");
+                $topLoader.percentageLoader({progress: (curgrade - mingrade) / (maxgrade-mingrade)});
+                $topLoader.percentageLoader({maingradevalue: grade.format("french")});
+                $topLoader.percentageLoader({secondarygradevalue: grade.format("uiaa")});
+
+                if (curgrade < maxgrade) {
+                  setTimeout(animateFunc, 200);
+                } else {
+                  topLoaderRunning = false;
+                }
+              };
+
+              setTimeout(animateFunc, 200);
+            });
+
+          }});
+        });
       </script>
     </div>
      
