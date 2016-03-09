@@ -4,11 +4,13 @@
 
 The ClimbingGrade widget is based on [lepoetemaudit/percentageloader](https://github.com/lepoetemaudit/percentageloader) and  [Grantismo/climbing-grade.js](https://github.com/Grantismo/climbing-grade.js)
 
-![Widget](http://troulite.fr/~lolo/widgets.png)
+![Widget](http://www.laurent-sorba.fr/climbinggradewidget/widgets.png)
 
-The plugin takes miniminal installation and is simple and flexibile to use. It makes use of HTML 5 canvas for a rich graphical appearance with only a 10kb (minified) javascript file necessary (suggested web font optional). It uses vectors rather than images so can be easily
-deployed at various sizes by simply adjusting the initial parameters. For a live demo please see
-[http://widgets.better2web.com/loader](http://widgets.better2web.com/loader)
+The plugin takes miniminal installation and is simple and flexibile to use. It makes use of HTML 5 canvas for a rich graphical appearance with only a 20kb (minified) javascript file necessary (suggested web font optional). It uses vectors rather than images so can be easily deployed at various sizes by simply adjusting the initial parameters.
+
+You can try it here:
+* http://www.laurent-sorba.fr/climbinggradewidget/demo.html
+* http://www.laurent-sorba.fr/climbinggradewidget/demo-nonjquery.html
 
 ## Requirements
 
@@ -29,9 +31,9 @@ This javascript is licensed under the MIT License (MIT). Please see the file cli
 
 ## Installation
 
-1. Include the javascript file (a minified version is also provided)
-2. You can also include the (optional but recommended web font) - Bebas Neue + fontkit CSS. This can
-   found downloaded at [http://www.fontsquirrel.com/fonts/bebas-neue](http://www.fontsquirrel.com/fonts/bebas-neue)
+1. Include the javascript file (a minified version is also provided): dist/climbinggradewidget.min.js
+2. You can also include the (optional but recommended web font) - Bebas Neue + fontkit CSS: dist/climbinggradewidget.css
+Font from [http://www.fontsquirrel.com/fonts/bebas-neue](http://www.fontsquirrel.com/fonts/bebas-neue)
 3. Run `$.percentageLoader` on any block element where you want the widget to appear if using jQuery, or simply
    `var loader = new PercentageLoader(domElement, options)`
 
@@ -65,7 +67,7 @@ Supported grade formats are:
     
     // jQuery
     $("#myDiv").percentageLoader({
-        width : 180, height : 180, 
+        width : 128, height : 128, 
         progress : (curgrade-mingrade) / (maxgrade-mingrade),
         maingradevalue :  grade.format("french"),
         secondarygradevalue : grade.format("uiaa")});
@@ -73,7 +75,7 @@ Supported grade formats are:
     // Without jQuery
     var loader = new PercentageLoader(
         document.getElementById('myDiv'), 
-        { width : 180, height : 180, 
+        { width : 128, height : 128, 
         progress : (curgrade-mingrade) / (maxgrade-mingrade),
         maingradevalue :  grade.format("french"),
         secondarygradevalue : grade.format("uiaa")});
